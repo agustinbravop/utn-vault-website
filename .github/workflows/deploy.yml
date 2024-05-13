@@ -1,0 +1,54 @@
+name: Deploy Vault to GitHub Pages When Updated
+
+# Esta GitHub Action es disparada por una Action del repo `agustinbravop/utn-vault`.
+on:
+  repository_dispatch:
+    types: [trigger-workflow]
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0 # Fetch all history for git info
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 18.14
+
+      - name: Install Dependencies
+        # Parece que una dependencia es específica al OS y trae problemas
+        # ya que desarrollo en Windows pero hago el deploy en Ubuntu.
+        # Borrar el `package-lock.json` permite descargar la versión de Ubuntu.
+        run: rm package-lock.json && npm i
+
+      - name: Clone `utn-vault` Repository
+        run: mkdir content && cd content && git clone https://github.com/agustinbravop/utn-vault
+
+      - name: Build Quartz
+        run: npx quartz build
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v2
+        with:
+          path: public
+
+  deploy:
+    needs: build
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v2
