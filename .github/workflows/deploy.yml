@@ -34,7 +34,7 @@ jobs:
         run: rm package-lock.json && npm i
 
       - name: Clone `utn-vault` Repository
-        run: mkdir content && cd content && git clone https://github.com/agustinbravop/utn-vault
+        run: git clone https://github.com/agustinbravop/utn-vault && mv utn-vault content
 
       - name: Build Quartz
         run: npx quartz build
