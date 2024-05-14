@@ -4,6 +4,8 @@ name: Deploy Vault to GitHub Pages When Updated
 on:
   repository_dispatch:
     types: [trigger-workflow]
+  push:
+  workflow_dispatch:
 
 permissions:
   contents: read
