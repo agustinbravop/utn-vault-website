@@ -66,7 +66,8 @@ export default ((opts?: Partial<BreadcrumbOptions>) => {
 
     // Format entry for root element
     const firstEntry = formatCrumb(options.rootName, fileData.slug!, "/" as SimpleSlug)
-    const crumbs: CrumbData[] = [firstEntry]
+    // MOD: Eliminado "Home" del breadcrumb porque ocupa espacio sin aportar una mejor navegabilidad.
+    const crumbs: CrumbData[] = []
 
     if (!folderIndex && options.resolveFrontmatterTitle) {
       folderIndex = new Map()
