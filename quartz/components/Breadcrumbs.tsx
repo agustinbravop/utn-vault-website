@@ -42,6 +42,7 @@ function formatCrumb(displayName: string, baseSlug: FullSlug, currentSlug: Simpl
   }
 }
 
+// MOD: Eliminado "Home" del breadcrumb porque ocupa espacio sin aportar una mejor navegabilidad.
 export default ((opts?: Partial<BreadcrumbOptions>) => {
   const options: BreadcrumbOptions = { ...defaultOptions, ...opts }
   const Breadcrumbs: QuartzComponent = ({
@@ -50,6 +51,68 @@ export default ((opts?: Partial<BreadcrumbOptions>) => {
     displayClass,
     ctx,
   }: QuartzComponentProps) => {
+    // Hide crumbs on root if enabled
+    if (options.hideOnRoot && fileData.slug === "index") {
+      return <></>
+    }
+
+    // Format entry for root element
+    const firstEntry = formatCrumb(options.rootName, fileData.slug!, "/" as SimpleSlug)
+    // MOD: Eliminado "Home" del breadcrumb porque ocupa espacio sin aportar una mejor navegabilidad.
+    const crumbs: CrumbData[] = []
+
+    if (!folderIndex && options.resolveFrontmatterTitle) {
+      folderIndex = new Map()
+      // construct the index for the first time
+      for (const file of allFiles) {
+        const folderParts = file.slug?.split("/")
+        if (folderParts?.at(-1) === "index") {
+          folderIndex.set(folderParts.slice(0, -1).join("/"), file)
+        }
+      }
+    }
+
+    // Split slug into hierarchy/parts
+    const slugParts = fileData.slug?.split("/")
+    if (slugParts) {
+      // is tag breadcrumb?
+      const isTagPath = slugParts[0] === "tags"
+
+      // full path until current part
+      let currentPath = ""
+
+      for (let i = 0; i < slugParts.length - 1; i++) {
+        let curPathSegment = slugParts[i]
+
+        // Try to resolve frontmatter folder title
+        const currentFile = folderIndex?.get(slugParts.slice(0, i + 1).join("/"))
+        if (currentFile) {
+          const title = currentFile.frontmatter!.title
+          if (title !== "index") {
+            curPathSegment = title
+          }
+        }
+
+        // Add current slug to full path
+        currentPath = joinSegments(currentPath, slugParts[i])
+        const includeTrailingSlash = !isTagPath || i < 1
+
+        // Format and add current crumb
+        const crumb = formatCrumb(
+          curPathSegment,
+          fileData.slug!,
+          (currentPath + (includeTrailingSlash ? "/" : "")) as SimpleSlug,
+        )
+        crumbs.push(crumb)
+      }
+
+      // Add current file to crumb (can directly use frontmatter title)
+      if (options.showCurrentPage && slugParts.at(-1) !== "index") {
+        crumbs.push({
+          displayName: fileData.frontmatter!.title,
+          path: "",
+        })
+      }
     const trie = (ctx.trie ??= trieFromAllFiles(allFiles))
     const slugParts = fileData.slug!.split("/")
     const pathNodes = trie.ancestryChain(slugParts)

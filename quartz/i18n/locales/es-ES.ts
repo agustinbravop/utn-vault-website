@@ -36,7 +36,8 @@ export default {
       title: "Explorador",
     },
     footer: {
-      createdWith: "Creado con",
+      // MOD: Aclaro que es solo el sitio web lo creado por Quartz.
+      createdWith: "Sitio web creado con",
     },
     graph: {
       title: "Vista Gráfica",
@@ -57,7 +58,8 @@ export default {
       title: "Tabla de Contenidos",
     },
     contentMeta: {
-      readingTime: ({ minutes }) => `Se lee en ${minutes} min`,
+      // MOD: personalizo el mensaje del tiempo de lectura para que suene más natural.
+      readingTime: ({ minutes }) => `lectura de ${minutes} min`,
     },
   },
   pages: {

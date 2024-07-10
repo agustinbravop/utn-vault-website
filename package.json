@@ -1,15 +1,13 @@
 {
-  "name": "@jackyzha0/quartz",
-  "description": "🌱 publish your digital garden and notes as a website",
+  "name": "utn-vault-website",
+  "description": "Generador del sitio web para mi Obsidian Vault con mis apuntes de Ingeniería en Sistemas de Información, carrera cursada en la UTN FRRe",
   "private": true,
   "version": "4.5.1",
   "type": "module",
-  "author": "jackyzha0 <j.zhao2k19@gmail.com>",
   "license": "MIT",
-  "homepage": "https://quartz.jzhao.xyz",
   "repository": {
     "type": "git",
-    "url": "https://github.com/jackyzha0/quartz.git"
+    "url": "https://github.com/agustinbravop/utn-vault-website.git"
   },
   "scripts": {
     "quartz": "./quartz/bootstrap-cli.mjs",

@@ -299,3 +299,29 @@ window.addEventListener("resize", function () {
 function setFolderState(folderElement: HTMLElement, collapsed: boolean) {
   return collapsed ? folderElement.classList.remove("open") : folderElement.classList.add("open")
 }
+
+/**
+ * Toggles visibility of a folder
+ * @param array array of FolderState (`fileTree`, either get from local storage or data attribute)
+ * @param path path to folder (e.g. 'advanced/more/more2')
+ */
+function toggleCollapsedByPath(array: FolderState[], path: string) {
+  const entry = array.find((item) => item.path === path)
+  if (entry) {
+    entry.collapsed = !entry.collapsed
+  }
+}
+
+// MOD: Permite que el Explorer siempre aproveche al máximo el espacio libre,
+// pero también asegura que entre la lista completa.
+function resizeMaxHeight() {
+  const explorerUl = document.getElementById("explorer-ul")
+  if (!explorerUl) return
+
+  // 320 son los píxeles que están por arriba del inicio del Explorer.
+  explorerUl.style.height = `${window.innerHeight - 320}px`
+}
+
+window.addEventListener("load", resizeMaxHeight)
+window.addEventListener("resize", resizeMaxHeight)
+document.addEventListener("nav", resizeMaxHeight)
