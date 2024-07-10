@@ -3,6 +3,8 @@ import style from "./styles/backlinks.scss"
 import { resolveRelative, simplifySlug } from "../util/path"
 import { i18n } from "../i18n"
 import { classNames } from "../util/lang"
+// @ts-ignore
+import script from "./scripts/backlinks.inline"
 
 const Backlinks: QuartzComponent = ({
   fileData,
@@ -33,4 +35,6 @@ const Backlinks: QuartzComponent = ({
 }
 
 Backlinks.css = style
+// MOD: agregado script al componente `Backlinks` para reajustar su altura.
+Backlinks.afterDOMLoaded = script
 export default (() => Backlinks) satisfies QuartzComponentConstructor

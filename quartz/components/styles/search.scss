@@ -5,6 +5,11 @@
   max-width: 14rem;
   flex-grow: 0.3;
 
+  // MOD: acortar el ancho del componente "Buscar" en mobile.
+  @media all and (max-width: $mobileBreakpoint) {
+    flex-grow: 0;
+  }
+
   & > #search-icon {
     background-color: var(--lightgray);
     border-radius: 4px;
@@ -21,6 +26,11 @@
     & > p {
       display: inline;
       padding: 0 1rem;
+
+      // MOD: acortar el ancho del componente "Buscar" en mobile.
+      @media all and (max-width: $mobileBreakpoint) {
+        display: none;
+      }
     }
 
     & svg {
