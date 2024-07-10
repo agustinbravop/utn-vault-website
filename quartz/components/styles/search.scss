@@ -26,6 +26,11 @@
     & > p {
       display: inline;
       padding: 0 1rem;
+
+      // MOD: acortar el ancho del componente "Buscar" en mobile.
+      @media all and (max-width: $mobileBreakpoint) {
+        display: none;
+      }
     }
 
     & svg {
