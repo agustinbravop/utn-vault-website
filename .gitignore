@@ -9,3 +9,5 @@ tsconfig.tsbuildinfo
 private/
 .replit
 replit.nix
+# MOD: ignorar el directorio content porque es un symlink. 
+content
