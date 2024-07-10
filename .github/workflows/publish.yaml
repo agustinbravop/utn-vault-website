@@ -1,0 +1,62 @@
+name: Deploy To GitHub Pages When Vault Is Updated
+
+on:
+  # Esta GitHub Action es disparada desde el repo `agustinbravop/utn-vault`.
+  repository_dispatch:
+    types: [trigger-workflow]
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0 # Fetch all history for git info
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 18.14
+
+      # Parece que una dependencia de quartz es específica al OS y trae problemas
+      # al desarrollar en Windows pero deployar en Ubuntu.
+      # Borrar el `package-lock.json` permite descargar la versión de Ubuntu.
+      - name: Install Dependencies
+        run: rm package-lock.json && npm i
+
+      # Clonar el contenido de la Obsidian Vault.
+      - name: Clone `utn-vault` Repository
+        run: git clone https://github.com/agustinbravop/utn-vault && mv utn-vault content
+
+      # Construir el static site.
+      - name: Build Quartz
+        run: npx quartz build
+
+      # Subirlo a Github Pages.
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v2
+        with:
+          path: public
+
+  deploy:
+    needs: build
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+
+    steps:
+      # Publicarlo en GitHub Pages
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v2

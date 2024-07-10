@@ -25,6 +25,32 @@ export function byDateAndAlphabetical(cfg: GlobalConfiguration): SortFn {
   }
 }
 
+/** MOD: Ordenar por fecha tiene sentido en un blog, no en unos apuntes. */
+function byAlphabetical(): (f1: QuartzPluginData, f2: QuartzPluginData) => number {
+  return (f1, f2) => {
+    // sort lexographically by title
+    const f1Title = f1.frontmatter?.title.toLowerCase() ?? ""
+    const f2Title = f2.frontmatter?.title.toLowerCase() ?? ""
+    return filterPrefixes(f1Title).localeCompare(filterPrefixes(f2Title))
+  }
+}
+
+const FILTERED_PREFIXES = ["Los ", "Las ", "El ", "La "]
+
+/**
+ * Retorna el string dado pero sin cualquiera de los prefijos listados.
+ * Solo elimina el primer prefijo que encuentra. Ej: Dado "Los la" devuelve "la".
+ * Ejemplo: `filterPrefixes("Los Procesos")` retorna "Procesos".
+ */
+function filterPrefixes(str: string) {
+  for (const prefix of FILTERED_PREFIXES) {
+    if (str.startsWith(prefix)) {
+      return str.slice(prefix.length)
+    }
+  }
+  return str
+}
+
 type Props = {
   limit?: number
   sort?: SortFn
