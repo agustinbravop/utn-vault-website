@@ -21,6 +21,7 @@ const config: QuartzConfig = {
       "private",
       "templates",
       // Directorios que no corresponden en el sitio web.
+      "Excalidraw",
       ".obsidian",
       ".git",
       ".github",
@@ -45,7 +46,7 @@ const config: QuartzConfig = {
           light: "#faf8f8",
           lightgray: "#e5e5e5",
           gray: "#b8b8b8",
-          darkgray: "#4e4e4e",
+          darkgray: "#3e3e3e",
           dark: "#2b2b2b",
           secondary: "#284b63",
           tertiary: "#84a59d",
