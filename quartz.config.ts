@@ -33,7 +33,7 @@ const config: QuartzConfig = {
       "**/*.excalidraw",
       "**/*.excalidraw.md",
     ],
-    defaultDateType: "created",
+    defaultDateType: "modified",
     generateSocialImages: false,
     theme: {
       fontOrigin: "googleFonts",
