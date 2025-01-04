@@ -40,14 +40,9 @@ jobs:
 
       # Establecer el tiempo del último commit de cada archivo como la fecha de modificación del archivo.
       # Así, cada artículo de la wiki tiene la fecha de su última modificación, y no la fecha de ejecución de esta pipeline.
-      # Ref: https://stackoverflow.com/a/55609950
+      # Ref: https://stackoverflow.com/a/60984318
       - name: Set Modified Date of Every File to Last Commit Time
-        run: >+
-          git ls-tree -r --name-only HEAD | while read filename; do
-            unixtime=$(git log -1 --format="%at" -- "${filename}")
-            touchtime=$(date -d @$unixtime +'%Y%m%d%H%M.%S')
-            touch -t ${touchtime} "${filename}"
-          done
+        run: git ls-files | xargs -I{} git log -1 --date=format:%Y%m%d%H%M.%S --format='touch -t %ad "{}"' "{}" | $SHELL
 
       # Construir el static site.
       - name: Build Quartz
