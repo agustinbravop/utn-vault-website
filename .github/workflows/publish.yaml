@@ -21,12 +21,12 @@ jobs:
   build:
     runs-on: ubuntu-22.04
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         with:
           fetch-depth: 0 # Fetch all history for git info
       - uses: actions/setup-node@v4
         with:
-          node-version: 22.12.0
+          node-version: 22
 
       # Parece que una dependencia de quartz es específica al OS y trae problemas
       # al desarrollar en Windows pero deployar en Ubuntu.
@@ -36,7 +36,7 @@ jobs:
 
       # Clonar el contenido de la Obsidian Vault en la carpeta `content`.
       - name: Clone `utn-vault` Repository
-        run: git clone https://github.com/agustinbravop/utn-vault content
+        run: git clone --mirror https://github.com/agustinbravop/utn-vault.git content
 
       # Construir el static site.
       - name: Build Quartz
@@ -44,7 +44,7 @@ jobs:
 
       # Subirlo a Github Pages.
       - name: Upload artifact
-        uses: actions/upload-pages-artifact@v2
+        uses: actions/upload-pages-artifact@v3
         with:
           path: public
 
@@ -59,4 +59,4 @@ jobs:
       # Publicarlo en GitHub Pages
       - name: Deploy to GitHub Pages
         id: deployment
-        uses: actions/deploy-pages@v2
+        uses: actions/deploy-pages@v4
