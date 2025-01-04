@@ -36,7 +36,7 @@ jobs:
 
       # Clonar el contenido de la Obsidian Vault en la carpeta `content`.
       - name: Clone `utn-vault` Repository
-        run: git clone --mirror https://github.com/agustinbravop/utn-vault.git content
+        run: git clone https://github.com/agustinbravop/utn-vault.git content && cd content && git fetch --all
 
       # Construir el static site.
       - name: Build Quartz
