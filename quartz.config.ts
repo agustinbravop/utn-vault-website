@@ -16,7 +16,7 @@ const config: QuartzConfig = {
       provider: "plausible",
     },
     locale: "es-ES",
-    baseUrl: "agustinbravop.github.io",
+    baseUrl: "agustinbravop.github.io/utn-vault-website",
     ignorePatterns: [
       "private",
       "templates",
