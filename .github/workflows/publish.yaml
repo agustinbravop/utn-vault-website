@@ -34,9 +34,9 @@ jobs:
       - name: Install Dependencies
         run: rm package-lock.json && npm i
 
-      # Clonar el contenido de la Obsidian Vault.
+      # Clonar el contenido de la Obsidian Vault en la carpeta `content`.
       - name: Clone `utn-vault` Repository
-        run: git clone https://github.com/agustinbravop/utn-vault && mv utn-vault content
+        run: git clone https://github.com/agustinbravop/utn-vault content
 
       # Construir el static site.
       - name: Build Quartz
