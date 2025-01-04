@@ -8,7 +8,7 @@ import * as Plugin from "./quartz/plugins"
  */
 const config: QuartzConfig = {
   configuration: {
-    pageTitle: "🪴 Quartz 4.0",
+    pageTitle: "💾 Apuntes de ISI",
     pageTitleSuffix: "",
     enableSPA: true,
     enablePopovers: true,
@@ -30,6 +30,8 @@ const config: QuartzConfig = {
       "LICENSE.md",
       "README.md",
       ".prettierignore",
+      "**/*.excalidraw",
+      "**/*.excalidraw.md",
     ],
     defaultDateType: "created",
     generateSocialImages: false,
