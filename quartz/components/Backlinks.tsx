@@ -53,5 +53,7 @@ export default ((opts?: Partial<BacklinksOptions>) => {
   Backlinks.css = style
   Backlinks.afterDOMLoaded = overflowListAfterDOMLoaded
 
+  // MOD: agregado script al componente `Backlinks` para reajustar su altura.
+  Backlinks.afterDOMLoaded = script
   return Backlinks
 }) satisfies QuartzComponentConstructor

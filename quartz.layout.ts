@@ -9,6 +9,7 @@ export const sharedPageComponents: SharedLayout = {
   footer: Component.Footer({
     links: {
       GitHub: "https://github.com/agustinbravop/utn-vault-website",
+      "Obsidian Vault": "https://github.com/agustinbravop/utn-vault",
     },
   }),
 }
@@ -38,7 +39,9 @@ export const defaultContentPageLayout: PageLayout = {
   ],
   right: [
     Component.Graph(),
-    Component.DesktopOnly(Component.TableOfContents()),
+    // MOD: quito la tabla de contenidos para que los retroenlaces se vean en todo momento.
+    // Considero que los retroenlaces son más importantes que la tabla de contenidos.
+    // Component.DesktopOnly(Component.TableOfContents()),
     Component.Backlinks(),
   ],
 }
