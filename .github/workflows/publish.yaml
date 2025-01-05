@@ -34,15 +34,13 @@ jobs:
       - name: Install Dependencies
         run: rm package-lock.json && npm i
 
-      # Clonar el contenido de la Obsidian Vault en la carpeta `content`.
+      # Clonar el contenido de la Obsidian Vault.
       - name: Clone `utn-vault` Repository
-        run: git clone https://github.com/agustinbravop/utn-vault.git content && cd content
+        run: git clone https://github.com/agustinbravop/utn-vault.git /content
 
-      # Establecer el tiempo del último commit de cada archivo como la fecha de modificación del archivo.
-      # Así, cada artículo de la wiki tiene la fecha de su última modificación, y no la fecha de ejecución de esta pipeline.
-      # Ref: https://stackoverflow.com/a/60984318
-      - name: Set Modified Date of Every File to Last Commit Time
-        run: git ls-files -z | xargs -0 -I {} git log -1 --date=format:%Y%m%d%H%M.%S --format='touch -t %ad "{}"' {} | bash
+      # Crear el symlink a la Obsidian Vault para que Quartz pueda acceder a ella.
+      - name: Create Symlink to `/content`
+        run: sudo ln -s /content content
 
       # Construir el static site.
       - name: Build Quartz
