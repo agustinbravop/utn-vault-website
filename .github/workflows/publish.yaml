@@ -21,11 +21,6 @@ jobs:
   build:
     runs-on: ubuntu-22.04
 
-    defaults:
-      run:
-        shell: bash
-        working-directory: ./app
-
     steps:
       - uses: actions/checkout@v4
         with:
@@ -42,11 +37,11 @@ jobs:
 
       # Clonar el contenido de la Obsidian Vault.
       - name: Clone `utn-vault` Repository
-        run: git clone https://github.com/agustinbravop/utn-vault.git ../content
+        run: git clone https://github.com/agustinbravop/utn-vault.git /home/runner/work/utn-vault-website/content
 
       # Crear el symlink a la Obsidian Vault para que Quartz pueda acceder a ella.
       - name: Create Symlink to the Obsidian Vault
-        run: sudo ln -s ../content content
+        run: sudo ln -s /home/runner/work/utn-vault-website/content content
 
       # Construir el static site.
       - name: Build Quartz
