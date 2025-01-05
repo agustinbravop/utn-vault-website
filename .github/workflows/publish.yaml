@@ -36,11 +36,11 @@ jobs:
 
       # Clonar el contenido de la Obsidian Vault.
       - name: Clone `utn-vault` Repository
-        run: git clone https://github.com/agustinbravop/utn-vault.git /content
+        run: git clone https://github.com/agustinbravop/utn-vault.git /usr/home/content
 
       # Crear el symlink a la Obsidian Vault para que Quartz pueda acceder a ella.
-      - name: Create Symlink to `/content`
-        run: sudo ln -s /content content
+      - name: Create Symlink to the Obsidian Vault
+        run: sudo ln -s /usr/home/content content
 
       # Construir el static site.
       - name: Build Quartz
