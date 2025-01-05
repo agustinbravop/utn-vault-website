@@ -23,6 +23,7 @@ jobs:
 
     defaults:
       run:
+        shell: bash
         working-directory: ./app
 
     steps:
