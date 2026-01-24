@@ -31,9 +31,9 @@ jobs:
 
       # Parece que una dependencia de quartz es específica al OS y trae problemas
       # al desarrollar en Windows pero deployar en Ubuntu.
-      # Borrar el `package-lock.json` permite descargar la versión de Ubuntu.
+      # Es importante instalar dependencias específicas a la plataforma.
       - name: Install Dependencies
-        run: rm package-lock.json && npm i
+        run: rm package-lock.json && npm install --os=linux --cpu=x64 --include=optional sharp
 
       # Clonar el contenido de la Obsidian Vault.
       - name: Clone `utn-vault` Repository

@@ -24,17 +24,12 @@
 
     & > p {
       display: inline;
-<<<<<<< HEAD
       padding: 0 1rem;
 
       // MOD: acortar el ancho del componente "Buscar" en mobile.
       @media all and ($mobile) {
         display: none;
       }
-=======
-      color: var(--gray);
-      text-wrap: unset;
->>>>>>> 25a6747d7d63914c206d58d7d6ac3846d9934abe
     }
 
     & svg {
