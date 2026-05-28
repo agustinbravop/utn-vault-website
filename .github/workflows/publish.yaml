@@ -12,6 +12,7 @@ permissions:
   contents: read
   pages: write
   id-token: write
+  packages: write
 
 concurrency:
   group: "pages"
@@ -52,6 +53,24 @@ jobs:
       # Construir el static site.
       - name: Build Quartz
         run: npx quartz build
+
+      # Subir la imagen de contenedor a GitHub Container Registry.
+      - name: Log in to GitHub Container Registry
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          file: Dockerfile.static
+          push: true
+          tags: |
+            ghcr.io/${{ github.repository }}:latest
+            ghcr.io/${{ github.repository }}:${{ github.sha }}
 
       # Subirlo a Github Pages.
       - name: Upload artifact
