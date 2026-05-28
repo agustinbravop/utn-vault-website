@@ -17,7 +17,7 @@ const config: QuartzConfig = {
       tagId: "G-VG7TMJ2LDX",
     },
     locale: "es-ES",
-    baseUrl: "agustinbravop.github.io/utn-vault-website",
+    baseUrl: "apuntes.agusbravo.dev",
     ignorePatterns: [
       "private",
       "templates",
